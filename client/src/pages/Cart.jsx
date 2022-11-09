@@ -1,5 +1,5 @@
 import { Add, Remove } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -8,6 +8,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useHistory } from "react-router";
+import { addProduct, remProduct, addQuant, remQuant } from '../redux/cartRedux'
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -151,22 +152,15 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
+
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
-  const [quantity, setQuantity] = useState(1);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const onToken = (token) => {
     setStripeToken(token);
-  };
-
-  const handleQuantity = (type) => {
-    if (type === "dec") {
-      quantity > 1 && setQuantity(quantity - 1);
-    } else {
-      setQuantity(quantity + 1);
-    }
   };
 
   useEffect(() => {
@@ -184,12 +178,12 @@ const Cart = () => {
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, history]);
   return (
-    <Container>
+    <Container> 
       <Navbar />
       <Wrapper>
         <Title>VOTRE PANIER</Title>
         <Top>
-          <TopButton>CONTINUE VOS ACHATS</TopButton>
+          <TopButton onClick={event => window.location.href = '/'}>CONTINUE VOS ACHATS</TopButton>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Votre liste de souhait (0)</TopText>
@@ -216,9 +210,9 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add onClick={() => handleQuantity("inc")} />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove onClick={() => handleQuantity("dec")} />
+                    <Add onClick={() => dispatch(addQuant(product.quantity))} />
+                    <ProductAmount>{cart.quantity}</ProductAmount>
+                    <Remove onClick={() => dispatch(remQuant(product.quantity))} />
                   </ProductAmountContainer>
                   <ProductPrice>
                     {product.price * product.quantity} €
@@ -228,11 +222,11 @@ const Cart = () => {
             ))}
             <Hr />
           </Info>
-          <Summary>
+          <Summary> 
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>{cart.total} €</SummaryItemPrice>
+              <SummaryItemPrice>{console.log(cart.total)} €</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>

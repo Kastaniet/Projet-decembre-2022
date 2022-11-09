@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
   width: 100vw;
@@ -79,28 +80,31 @@ const Login = () => {
     login(dispatch, { username, password });
   };
   return (
-    <Container>
-      <Wrapper>
-        <Title>Connexion</Title>
-        <Form>
-          <Input
-            placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <Input
-            placeholder="Mot de passe"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button onClick={handleClick} disabled={isFetching}>
-            Connexion
-          </Button>
-          {error && <Error>Une erreur est survenue...</Error>}
-          <Link>Mot de passe oublié ?</Link>
-          <Link to="/register">Créer un nouveau compte</Link>
-        </Form>
-      </Wrapper>
-    </Container>
+    <div>
+      <Navbar />
+      <Container>
+        <Wrapper>
+          <Title>Connexion</Title>
+          <Form>
+            <Input
+              placeholder="username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="Mot de passe"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button onClick={handleClick} disabled={isFetching}>
+              Connexion
+            </Button>
+            {error && <Error>Une erreur est survenue...</Error>}
+            <Link>Mot de passe oublié ?</Link>
+            <Link to="/register">Créer un nouveau compte</Link>
+          </Form>
+        </Wrapper>
+      </Container>
+    </div>
   );
 };
 

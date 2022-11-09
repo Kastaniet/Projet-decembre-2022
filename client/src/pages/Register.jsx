@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -55,24 +56,27 @@ const Button = styled.button`
 
 const Register = () => {
   return (
-    <Container>
-      <Wrapper>
-        <Title>CREER UN COMPTE</Title>
-        <Form>
-          <Input placeholder="Nom" />
-          <Input placeholder="Prénom" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
-          <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button>CRÉER</Button>
-        </Form>
-      </Wrapper>
-    </Container>
+    <div>
+      <Navbar />
+      <Container>
+        <Wrapper>
+          <Title>CREER UN COMPTE</Title>
+          <Form>
+            <Input placeholder="Nom" />
+            <Input placeholder="Prénom" />
+            <Input placeholder="username" />
+            <Input placeholder="email" />
+            <Input placeholder="password" />
+            <Input placeholder="confirm password" />
+            <Agreement>
+              By creating an account, I consent to the processing of my personal
+              data in accordance with the <b>PRIVACY POLICY</b>
+            </Agreement>
+            <Button>CRÉER</Button>
+          </Form>
+        </Wrapper>
+      </Container>
+    </div>
   );
 };
 
